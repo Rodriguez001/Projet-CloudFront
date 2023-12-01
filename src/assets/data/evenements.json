@@ -1,0 +1,128 @@
+[
+  {
+    "titre": "Démarrage du cours Angular",
+    "date": 1699347579844,
+    "places": 22,
+    "horaires": {
+      "debut": "Hier matin",
+      "fin": "Hier soir"
+    },
+    "media": {
+      "src": "assets/images/event.png",
+      "alt": "image inexistante"
+    }
+  },
+  {
+    "titre": "Voir la partie dynamique des données dans Angular",
+    "date": 1699347579850,
+    "places": 12,
+    "horaires": {
+      "debut": "Ce matin",
+      "fin": "Plus tard"
+    },
+    "media": {
+      "src": "assets/images/event2.png",
+      "alt": "image inexistante"
+    }
+  },
+  {
+    "titre": "Modularisation des trucs",
+    "date": 1699347579899,
+    "places": 26,
+    "horaires": {
+      "debut": "Hier matin",
+      "fin": "Hier soir"
+    },
+    "image": "assets/images/event.png"
+  },
+  {
+    "titre": "Sécurité dans le développement Front",
+    "date": 1699347579950,
+    "places": 21,
+    "horaires": {
+      "debut": "Ce matin",
+      "fin": "Plus tard"
+    },
+    "image": "assets/images/event.png"
+  },
+  {
+    "titre": "XHR et asynchrone en dans les technologies Web",
+    "date": 1699347589844,
+    "places": 22,
+    "horaires": {
+      "debut": "Hier matin",
+      "fin": "Hier soir"
+    },
+    "image": "assets/images/event.png"
+  },
+  {
+    "titre": "Qu'est qu'on pourrait bien faire ? On fait un évenement pour en parler ?",
+    "date": 1699347599850,
+    "places": 21,
+    "horaires": {
+      "debut": "Ce matin",
+      "fin": "Plus tard"
+    },
+    "image": "assets/images/event.png"
+  },
+  {
+    "titre": "Bon, bin, voilà, on sait tout",
+    "date": 1699347599944,
+    "places": 5,
+    "horaires": {
+      "debut": "Hier matin",
+      "fin": "Hier soir"
+    },
+    "image": "assets/images/event.png"
+  },
+  {
+    "titre": "L'an prochain on sera quand ??",
+    "date": 1699357579850,
+    "places": 21,
+    "horaires": {
+      "debut": "Ce matin",
+      "fin": "Plus tard"
+    },
+    "image": "assets/images/event.png"
+  },
+  {
+    "titre": "365 + 365 = ... l'an prochain ?",
+    "date": 1699367579844,
+    "places": 42,
+    "horaires": {
+      "debut": "Hier matin",
+      "fin": "Hier soir"
+    },
+    "image": "assets/images/event.png"
+  },
+  {
+    "titre": "Quelque chose s'est produit à pau !",
+    "date": 1699377579850,
+    "places": 21,
+    "horaires": {
+      "debut": "Ce matin",
+      "fin": "Plus tard"
+    },
+    "image": "assets/images/event.png"
+  },
+  {
+    "titre": "Comment ? Il y a eu un événement ?",
+    "date": 1699348579844,
+    "places": 17,
+    "horaires": {
+      "debut": "Hier matin",
+      "fin": "Hier soir"
+    },
+    "image": "assets/images/event.png"
+  },
+  {
+    "titre": "Oui !! à Pau !!!",
+    "date": 1699397579850,
+    "places": 14,
+    "horaires": {
+      "debut": "Ce matin",
+      "fin": "Plus tard"
+    },
+    "image": "assets/images/event.png"
+  }
+]

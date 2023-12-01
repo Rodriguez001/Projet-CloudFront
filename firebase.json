@@ -1,0 +1,9 @@
+{
+  "hosting": [
+    {
+      "target": "CY2023-feast",
+      "source": ".",
+      "frameworksBackend": {}
+    }
+  ]
+}

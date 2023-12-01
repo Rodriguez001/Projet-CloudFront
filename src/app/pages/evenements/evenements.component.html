@@ -1,0 +1,52 @@
+<section>
+  <fieldset>
+    <input
+      name="filtre"
+      [(ngModel)]="filtre"
+      placeholder="Filtrer les évenements"
+    />
+  </fieldset>
+  <table>
+    <thead>
+      <th>n°</th>
+      <th>Titre</th>
+      <th>Nb de places</th>
+      <th>Date</th>
+      <th>Debut</th>
+      <th>Fin</th>
+      <th>Voir l'évenement</th>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="
+          let e of events.listeEvents
+            | slice : depart : depart + pas
+            | events : filtre 
+            ;
+          let i = index
+        "
+      >
+        <td>{{ i }}</td>
+        <td>
+          <a [routerLink]="['/evenement', e.date]">{{ e.titre | uppercase }}</a>
+        </td>
+        <td>{{ e.places }}</td>
+        <td>{{ e.date | date : "MM d, y, h:mm:ss a" }}</td>
+        <td>{{ e.horaires.debut }}</td>
+        <td>{{ e.horaires.fin }}</td>
+        <td><button (click)="this.selectedEvent = e">voir</button></td>
+      </tr>
+    </tbody>
+  </table>
+  <article>
+    <button (click)="arriere()"><</button>
+    <button (click)="avant()">></button>
+  </article>
+</section>
+<section class="lightbox" *ngIf="selectedEvent">
+  <app-evenement
+    *ngIf="selectedEvent"
+    [selectedE]="selectedEvent"
+    (closeEvent)="initEvent()"
+  ></app-evenement>
+</section>

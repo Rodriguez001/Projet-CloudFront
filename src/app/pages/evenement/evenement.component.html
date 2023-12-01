@@ -1,0 +1,33 @@
+<section>
+  <div class="container" *ngIf="evenement">
+    <h2>{{ evenement.titre }}</h2>
+    <p>Date: {{ evenement.date | date }}</p>
+    <p>Places: {{ evenement.places }}</p>
+    <p>
+      Horaires: {{ evenement.horaires.debut }} - {{ evenement.horaires.fin }}
+    </p>
+    <p>
+      <img
+        [src]="evenement.media.src"
+        [alt]="evenement.media.alt"
+        *ngIf="evenement.media"
+      />
+    </p>
+  </div>
+  <div class="container" *ngIf="selectedEvent">
+    <h2>{{ selectedEvent.titre }}</h2>
+    <p>Date: {{ selectedEvent.date | date }}</p>
+    <p>Places: {{ selectedEvent.places }}</p>
+    <p>
+      Horaires: {{ selectedEvent.horaires.debut }} - {{ selectedEvent.horaires.fin }}
+    </p>
+    <p>
+      <img
+        [src]="selectedEvent.media.src"
+        [alt]="selectedEvent.media.alt"
+        *ngIf="selectedEvent.media"
+      />
+    </p>
+    <p><button (click)="this.fermer()">Fermer</button></p>
+  </div>
+</section>

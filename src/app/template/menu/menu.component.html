@@ -1,1 +1,13 @@
-<p>menu works!</p>
+<nav class="topnav">
+  <ul>
+    <li routerLink="/">Accueil</li>
+    <li routerLink="/evenements">Evénements</li>
+    <li routerLink="/profil">Mon profil</li>
+    <li routerLink="/utilisateurs">Utilisateurs</li>
+    <li routerLink="/inscription">S'inscrire</li>
+    <li routerLink="/connexion" *ngIf="!auth.isloggedIn">Se connecter</li>
+    <li routerLink="/" (click)="auth.logout()" *ngIf="auth.isloggedIn">
+      Se deconnecter
+    </li>
+  </ul>
+</nav>

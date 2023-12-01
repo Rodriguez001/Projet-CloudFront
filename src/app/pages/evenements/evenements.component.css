@@ -1,0 +1,16 @@
+fieldset {
+  display: flex;
+  flex-flow: wrap;
+  margin-top: 1%;
+  width: 30%;
+}
+
+app-evenement {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(130, 142, 140, 0.893);
+  padding: 20px;
+  z-index: 1000;
+}

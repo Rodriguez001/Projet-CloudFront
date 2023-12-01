@@ -1,0 +1,21 @@
+<section>
+  <div class="container" *ngIf="auth.profil">
+    <h2>Votre profil</h2>
+    <p>Nom: {{ auth.profil.nom }}</p>
+    <p>Prenom: {{ auth.profil.prenom }}</p>
+    <p>Email: {{ auth.profil.email }}</p>
+    <p>
+      Photo<img
+        class="image-container"
+        [src]="auth.profil.avatar"
+        alt="image profil"
+        *ngIf="auth.profil.avatar"
+      />
+    </p>
+  </div>
+  <fieldset>
+    <form *ngIf="auth.isloggedIn" (submit)="users.supprimerProfil()">
+      <button type="submit" class="btn btn-primary">Fermer le compte</button>
+    </form>
+  </fieldset>
+</section>

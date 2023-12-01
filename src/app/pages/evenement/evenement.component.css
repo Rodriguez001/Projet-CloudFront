@@ -1,0 +1,34 @@
+.container {
+    max-width: 800px; /* Adjust as needed */
+    margin: 0 auto;   /* Center the container */
+    padding: 20px;
+  }
+  
+  /* Title styling */
+  h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+  }
+  
+  /* Date, places, and horaires styling */
+  p {
+    font-size: 1.2em;
+    margin-bottom: 8px;
+  }
+  
+  /* Responsive design for smaller screens */
+  @media screen and (max-width: 600px) {
+    .container {
+      padding: 10px;
+    }
+  
+    h2 {
+      font-size: 1.2em;
+    }
+  
+    p {
+      font-size: 1em;
+    }
+  }
+
+ 

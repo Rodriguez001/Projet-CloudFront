@@ -1,0 +1,118 @@
+<section class="form-container">
+  <fieldset *ngIf="!auth.isloggedIn">
+    <h1>Créer un compte utilisateur</h1>
+    <form (submit)="auth.register()" *ngIf="!auth.isloggedIn">
+      <div class="form-group">
+        <label for="id">Login*</label>
+        <input
+          type="text"
+          class="form-control"
+          id="id"
+          name="id"
+          placeholder="Saississez votre identifiant"
+          [(ngModel)]="auth.profil.email"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="mdp">Mot de passe*</label>
+        <input
+          type="password"
+          class="form-control"
+          id="mdp"
+          name="mdp"
+          placeholder="Saississez votre mot de passe"
+          [(ngModel)]="auth.profil.mdp"
+          required
+        />
+      </div>
+      <button type="submit" class="btn btn-primary">S'inscrire</button>
+      <button type="reset" class="btn btn-primary">Annuler</button>
+    </form>
+    <em>* obligatoire</em>
+  </fieldset>
+  <fieldset *ngIf="auth.isloggedIn">
+    <h1>Création du profil</h1>
+    <form
+      *ngIf="auth.isloggedIn"
+      (submit)="users.gererDoc(ctlf.value)"
+      #ctlf="ngForm"
+    >
+      <div class="form-group">
+        <label for="Nom">Nom</label>
+        <input
+          type="text"
+          class="form-control"
+          id="nom"
+          name="nom"
+          [(ngModel)]="auth.profil.nom"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="Prenom">Prenom</label>
+        <input
+          type="text"
+          class="form-control"
+          id="prenom"
+          name="prenom"
+          [(ngModel)]="auth.profil.prenom"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="Mobile">Mobile</label>
+        <input
+          type="text"
+          class="form-control"
+          id="mobile"
+          name="mobile"
+          [(ngModel)]="auth.profil.mobile"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="avatar">Photo</label>
+        <input
+          type="file"
+          class="form-control"
+          id="avatar"
+          name="avatar"
+          (change)="users.loadImage($event)"        
+          [(ngModel)]="auth.profil.avatar"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="text"
+          class="form-control"
+          id="email"
+          name="email"
+          disabled="true"
+          [(ngModel)]="auth.profil.email"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="statut">statut</label>
+        <select
+          class="form-control"
+          id="statut"
+          name="statut"
+          [(ngModel)]="auth.profil.statut"
+          required
+        >
+          <option value="" disabled selected="selected">Status</option>
+          <option>user</option>
+          <option>admin</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">Créer</button>
+      <button type="reset" class="btn btn-primary">Annuler</button>
+    </form>
+    <em>* obligatoire</em>
+  </fieldset>  
+</section>

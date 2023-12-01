@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "angular-app-81946": {
+      "hosting": {
+        "CY2023-feast": [
+          "angular-app-81946"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "angular-app-81946"
+  }
+}

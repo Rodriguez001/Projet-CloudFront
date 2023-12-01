@@ -1,0 +1,20 @@
+<section>
+  <table>
+    <thead>
+      <th>Nom</th>
+      <th>Prénom</th>
+      <th>Email</th>
+      <th>Statut</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let u of listeUsers">
+        <td>{{ u.nom }}</td>
+        <td>{{ u.prenom }}</td>
+        <td>{{ u.email }}</td>
+        <td>
+          <span> {{ u.statut }} </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>
