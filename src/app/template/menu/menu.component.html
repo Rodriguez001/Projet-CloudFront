@@ -1,4 +1,4 @@
-<nav class="topnav">
+<!-- <nav class="topnav">
   <ul>
     <li routerLink="/">Accueil</li>
     <li routerLink="/evenements">Evénements</li>
@@ -10,4 +10,18 @@
       Se deconnecter
     </li>
   </ul>
-</nav>
+</nav> -->
+<p-menubar [model]="auth.items">
+  <ng-template pTemplate="start">
+    <ul>
+      <li routerLink="/">
+      <img src="../../../assets/images/logo.png" height="40" class="mr-1" /> 
+    </li>   
+  </ul>
+  </ng-template>
+  <ng-template pTemplate="end">
+        
+    <div class="field" *ngIf="auth.profil.nom"><span class="mr-2">Bienvenu, {{auth.profil.prenom}}!</span> <p-avatar image="{{auth.profil.avatar}}" styleClass="mr-2" size="xlarge" shape="circle"></p-avatar></div> 
+    
+  </ng-template>
+</p-menubar>

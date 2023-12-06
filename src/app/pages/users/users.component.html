@@ -1,5 +1,83 @@
-<section>
-  <table>
+<section class="flex justify-content-center align-items-center h-full w-full">
+  <p-table #dt
+    [value]="listeUsers"
+    [paginator]="true"
+    [rows]="rows"  
+    [globalFilterFields]="['nom', 'prenom']"
+    [(first)]="firstIndex" 
+    dataKey="uid"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [showCurrentPageReport]="true"
+  >
+    <ng-template pTemplate="caption">
+      <div class="flex align-items-center justify-content-between">
+        Les utilisateurs
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>            
+          <input type="text" pInputText (input)="applyFilterGlobal($event, 'contains')" placeholder="Rechercher..." />
+        </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="Nom" style="width: 20%">
+          Nom<p-sortIcon field="Nom"></p-sortIcon>
+        </th>
+        <th>Prénom</th>
+        <th>avatar</th>
+        <th>Email</th>
+        <th>Statut</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-u>
+      <tr>
+        <td>{{ u.nom }}</td>
+        <td>{{ u.prenom }}</td>
+        <td>
+          <img [src]="u.avatar" [alt]="u.nom" width="100" class="shadow-4" />
+        </td>
+        <td>{{ u.email }}</td>
+        <td><p-tag [value]="u.statut" [severity]="(u.statut == 'admin')? 'success': 'info'"></p-tag></td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <div class="mb-3"> 
+        <p-button 
+            type="button" 
+            class="mr-2" 
+            [text]="true"
+            [raised]="true"
+            [rounded]="true"
+            label="Precedent"
+            (click)="previous()"  
+            [disabled]="isFirst()"> 
+        </p-button> 
+        <p-button 
+            type="button" 
+            class="mr-2" 
+            label="Reset"
+            [text]="true"
+            [raised]="true"
+            [rounded]="true" 
+            (click)="reset()"> 
+        </p-button> 
+        <p-button 
+            type="button" 
+            class="mr-2"
+            label="Suivant"
+            [text]="true"
+            [raised]="true"
+            [rounded]="true"           
+            (click)="next()"  
+            [disabled]="isLast()"> 
+        </p-button> 
+    </div> 
+      <div class="flex align-items-center justify-content-between">
+        Au total {{ listeUsers ? listeUsers.length : 0 }} utilisateurs
+      </div>
+    </ng-template>
+  </p-table>
+  <!-- <table>
     <thead>
       <th>Nom</th>
       <th>Prénom</th>
@@ -16,5 +94,5 @@
         </td>
       </tr>
     </tbody>
-  </table>
+  </table> -->
 </section>

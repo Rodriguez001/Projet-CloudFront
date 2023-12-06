@@ -1,47 +1,141 @@
-<section>
-  <fieldset>
-    <input
-      name="filtre"
-      [(ngModel)]="filtre"
-      placeholder="Filtrer les évenements"
-    />
-  </fieldset>
-  <table>
-    <thead>
-      <th>n°</th>
-      <th>Titre</th>
-      <th>Nb de places</th>
-      <th>Date</th>
-      <th>Debut</th>
-      <th>Fin</th>
-      <th>Voir l'évenement</th>
-    </thead>
-    <tbody>
-      <tr
-        *ngFor="
-          let e of events.listeEvents
-            | slice : depart : depart + pas
-            | events : filtre 
-            ;
-          let i = index
-        "
-      >
-        <td>{{ i }}</td>
-        <td>
-          <a [routerLink]="['/evenement', e.date]">{{ e.titre | uppercase }}</a>
-        </td>
-        <td>{{ e.places }}</td>
-        <td>{{ e.date | date : "MM d, y, h:mm:ss a" }}</td>
-        <td>{{ e.horaires.debut }}</td>
-        <td>{{ e.horaires.fin }}</td>
-        <td><button (click)="this.selectedEvent = e">voir</button></td>
-      </tr>
-    </tbody>
-  </table>
-  <article>
-    <button (click)="arriere()"><</button>
-    <button (click)="avant()">></button>
-  </article>
+<section class="flex justify-content-center align-items-center h-full w-full" >
+  <p-toast></p-toast>
+
+  <div class="card">
+    <p-toolbar styleClass="mb-4 gap-2" *ngIf="auth.isAdmin">
+      <ng-template pTemplate="left">
+        <button
+          pButton
+          pRipple
+          label="New"
+          icon="pi pi-plus"
+          class="p-button-success mr-2"
+          (click)="openNew()"
+        ></button>
+        <button
+          pButton
+          pRipple
+          label="Delete"
+          icon="pi pi-trash"
+          class="p-button-danger"
+          (click)="deleteSelectedEvents()"
+          [disabled]="!selectedEvents || !selectedEvents.length"
+        ></button>
+      </ng-template>
+
+      <ng-template pTemplate="right">
+        <input type="text" pInputText (input)="applyFilterGlobal($event, 'contains')" placeholder="Rechercher..." />
+      </ng-template>
+    </p-toolbar>
+    <p-table
+      #dt      
+      [value]="events.listeEvents"
+      [rows]="3"
+      [paginator]="true"
+      [globalFilterFields]="['titre', 'Titre', 'date', 'debut', 'fin', 'infos']"
+      [tableStyle]="{ 'min-width': '75rem' }"
+      [(selection)]="selectedEvents"
+      [rowHover]="true"
+      dataKey="titre"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [showCurrentPageReport]="true"
+    >
+      <ng-template pTemplate="caption">
+        <div class="flex align-items-center justify-content-between">
+          <h3 class="m-0">Nos evenements</h3>
+          <span class="p-input-icon-right">
+          <button
+            pButton
+            pRipple
+            label="Participer"
+            icon="pi pi-check"
+            class="p-button-warning"
+            (click)="participerSelectedEvents()"
+            [disabled]="!selectedEvents || !selectedEvents.length"
+          ></button>
+        </span>
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>            
+            <input type="text" pInputText (input)="applyFilterGlobal($event, 'contains')" placeholder="Rechercher..." />
+          </span>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 4rem">
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+          </th>
+          <th pSortableColumn="titre" style="min-width: 15rem">
+            Titre <p-sortIcon field="titre"></p-sortIcon>
+          </th>
+          <th>Image</th>
+          <th pSortableColumn="places">
+            Nb de places <p-sortIcon field="places"></p-sortIcon>
+          </th>
+          <th pSortableColumn="date" style="min-width: 10rem">
+            Date <p-sortIcon field="date"></p-sortIcon>
+          </th>
+          <th pSortableColumn="debut">
+            Debut <p-sortIcon field="debut"></p-sortIcon>
+          </th>
+          <th pSortableColumn="fin">
+            Fin <p-sortIcon field="fin"></p-sortIcon>
+          </th>
+          <th>Voir</th>
+          <th style="min-width: 10rem">Participer</th>
+          <th *ngIf="auth.isAdmin"><div class="pi pi-spin pi-cog" style="font-size: 1rem"></div></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-evenement>
+        <tr>
+          <td><p-tableCheckbox [value]="evenement"></p-tableCheckbox></td>
+          <td>
+            <a [routerLink]="['/evenement', evenement.date]">{{
+              evenement.titre | uppercase
+            }}</a>
+          </td>
+          <td>
+            <img
+              [src]="evenement.media.src"
+              [alt]="evenement.media.alt"
+              width="75"
+              class="shadow-4"
+            />
+          </td>
+          <td>{{ evenement.places }}</td>
+          <td>{{ evenement.date | date : "MM d, y, h:mm:ss a" }}</td>
+          <td>{{ evenement.horaires.debut }}</td>
+          <td>{{ evenement.horaires.fin }}</td>
+          <td>
+            <button
+              pButton
+              class="p-button-rounded p-button-success mr-2"
+              (click)="this.selectedEvent = evenement"
+            >
+              voir
+            </button>
+          </td>
+          <td><p-tableCheckbox [value]="evenement"></p-tableCheckbox></td>
+          <td *ngIf="auth.isAdmin">
+            <button
+              pButton
+              pRipple
+              icon="pi pi-pencil"
+              class="p-button-rounded p-button-success mr-2"
+              (click)="editEvent(evenement)"
+            ></button>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-trash"
+              class="p-button-rounded p-button-warning"
+              (click)="deleteEvent(evenement)"
+            ></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
 </section>
 <section class="lightbox" *ngIf="selectedEvent">
   <app-evenement
@@ -50,3 +144,104 @@
     (closeEvent)="initEvent()"
   ></app-evenement>
 </section>
+
+<p-dialog
+  [(visible)]="productDialog"
+  [style]="{ width: '450px' }"
+  header="Details sur l'évenements"
+  [modal]="true"
+  styleClass="p-fluid"
+>
+  <ng-template pTemplate="content">
+    <img
+      [src]="evenement!.media.src"
+      [alt]="evenement!.media.alt"
+      class="product-image"
+      *ngIf="evenement!.media"
+    />
+    <div class="field">
+      <label for="titre">Titre</label>
+      <input
+        type="text"
+        pInputText
+        id="titre"
+        [(ngModel)]="evenement!.titre"
+        required
+        autofocus
+      />
+      <small class="p-error" *ngIf="submitted && !evenement!.titre"
+        >Title is required.</small
+      >
+    </div>
+    <div class="field">
+      <label for="infos">Description</label>
+      <textarea
+        id="infos"
+        pInputTextarea
+        [(ngModel)]="evenement!.infos"
+        required
+        rows="3"
+        class="w-full"
+      ></textarea>
+    </div>
+    <div class="field">
+      <label for="places">Nombre de places</label>
+      <p-inputNumber inputId="integeronly" [(ngModel)]="evenement!.places"></p-inputNumber>
+    </div>
+
+    <div class="formgrid grid">
+      <div class="field col">
+        <label for="date">Date</label>
+        <p-calendar
+          id="date"
+          [(ngModel)]="evenement!.date"
+          [showButtonBar]="true"
+          [showIcon]="true"
+        ></p-calendar>
+      </div>
+      <div class="field col">
+        <label for="debut">Debut</label>
+        <p-calendar
+          id="debut"
+          [(ngModel)]="evenement!.horaires.debut"
+          [showButtonBar]="true"
+          [showIcon]="true"
+          [showTime]="true"
+          [showSeconds]="true"
+        ></p-calendar>
+      </div>
+      <div class="field col">
+        <label for="fin">Fin</label>
+        <p-calendar
+          id="fin"
+          [(ngModel)]="evenement!.horaires.fin"
+          [showButtonBar]="true"
+          [showIcon]="true"
+          [showTime]="true"
+          [showSeconds]="true"
+        ></p-calendar>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      pRipple
+      label="Cancel"
+      icon="pi pi-times"
+      class="p-button-text"
+      (click)="hideDialog()"
+    ></button>
+    <button
+      pButton
+      pRipple
+      label="Save"
+      icon="pi pi-check"
+      class="p-button-text"
+      (click)="saveEvent()"
+    ></button>
+  </ng-template>
+</p-dialog>
+
+<p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>

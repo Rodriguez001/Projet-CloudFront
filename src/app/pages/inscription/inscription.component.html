@@ -1,118 +1,178 @@
-<section class="form-container">
-  <fieldset *ngIf="!auth.isloggedIn">
-    <h1>Créer un compte utilisateur</h1>
+<section class="flex justify-content-center align-items-center h-full w-full">
+  <p-fieldset legend="Inscription" *ngIf="!auth.isloggedIn">
     <form (submit)="auth.register()" *ngIf="!auth.isloggedIn">
-      <div class="form-group">
-        <label for="id">Login*</label>
-        <input
-          type="text"
-          class="form-control"
-          id="id"
-          name="id"
-          placeholder="Saississez votre identifiant"
-          [(ngModel)]="auth.profil.email"
-          required
-        />
-      </div>
-      <div class="form-group">
-        <label for="mdp">Mot de passe*</label>
-        <input
-          type="password"
-          class="form-control"
-          id="mdp"
-          name="mdp"
-          placeholder="Saississez votre mot de passe"
-          [(ngModel)]="auth.profil.mdp"
-          required
-        />
-      </div>
-      <button type="submit" class="btn btn-primary">S'inscrire</button>
-      <button type="reset" class="btn btn-primary">Annuler</button>
+      <p-card header="Créer votre compte" [style]="{ width: '360px' }">
+        <div class="field">
+          <label for="id">Login*</label>
+          <input
+            type="text"
+            pInputText
+            class="w-full"
+            id="id"
+            name="id"
+            placeholder="Saississez votre identifiant"
+            [(ngModel)]="auth.profil.email"
+            required
+          />
+        </div>
+        <div class="field">
+          <label for="mdp">Mot de passe*</label>
+          <input
+            type="password"
+            class="w-full"
+            pInputText
+            id="mdp"
+            name="mdp"
+            placeholder="Saississez votre mot de passe"
+            [(ngModel)]="auth.profil.mdp"
+            required
+          />
+        </div>
+        <ng-template pTemplate="footer">
+          <p-button
+            type="submit"
+            label="Suivant"
+            [text]="true"
+            [raised]="true"
+            [rounded]="true"
+            icon="pi pi-check"
+          ></p-button>
+          <p-button
+            type="reset"
+            label="Annuler"
+            [text]="true"
+            [raised]="true"
+            [rounded]="true"
+            icon="pi pi-times"
+            styleClass="p-button-secondary"
+            [style]="{ 'margin-left': '.5em' }"
+          ></p-button>
+        </ng-template>
+        <em>* obligatoire</em>
+      </p-card>
     </form>
-    <em>* obligatoire</em>
-  </fieldset>
-  <fieldset *ngIf="auth.isloggedIn">
-    <h1>Création du profil</h1>
+  </p-fieldset>
+
+  <p-fieldset legend="Vos informations personnelles" *ngIf="auth.isloggedIn">
     <form
       *ngIf="auth.isloggedIn"
-      (submit)="users.gererDoc(ctlf.value)"
-      #ctlf="ngForm"
+      (submit)="users.gererDoc()"     
     >
-      <div class="form-group">
-        <label for="Nom">Nom</label>
-        <input
-          type="text"
-          class="form-control"
-          id="nom"
-          name="nom"
-          [(ngModel)]="auth.profil.nom"
-          required
-        />
-      </div>
-      <div class="form-group">
-        <label for="Prenom">Prenom</label>
-        <input
-          type="text"
-          class="form-control"
-          id="prenom"
-          name="prenom"
-          [(ngModel)]="auth.profil.prenom"
-          required
-        />
-      </div>
-      <div class="form-group">
-        <label for="Mobile">Mobile</label>
-        <input
-          type="text"
-          class="form-control"
-          id="mobile"
-          name="mobile"
-          [(ngModel)]="auth.profil.mobile"
-          required
-        />
-      </div>
-      <div class="form-group">
-        <label for="avatar">Photo</label>
-        <input
-          type="file"
-          class="form-control"
-          id="avatar"
-          name="avatar"
-          (change)="users.loadImage($event)"        
-          [(ngModel)]="auth.profil.avatar"
-          required
-        />
-      </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input
-          type="text"
-          class="form-control"
-          id="email"
-          name="email"
-          disabled="true"
-          [(ngModel)]="auth.profil.email"
-          required
-        />
-      </div>
+      <p-card header="Création du profil" [style]="{ width: '360px' }">
+        <div class="field">
+          <label for="Nom">Nom</label>
+          <input
+            type="text"
+            pInputText
+            class="w-full"
+            id="nom"
+            name="nom"
+            [(ngModel)]="auth.profil.nom"
+            required
+          />
+        </div>
+        <div class="field">
+          <label for="Prenom">Prenom</label>
+          <input
+            type="text"
+            pInputText
+            class="w-full"
+            id="prenom"
+            name="prenom"
+            [(ngModel)]="auth.profil.prenom"
+            required
+          />
+        </div>
+        <div class="field">
+          <label for="Mobile">Mobile</label>
+          <input
+            type="text"
+            pInputText
+            class="w-full"
+            id="mobile"
+            name="mobile"
+            [(ngModel)]="auth.profil.mobile"
+            required
+          />
+        </div>
 
-      <div class="form-group">
-        <label for="statut">statut</label>
-        <select
-          class="form-control"
-          id="statut"
-          name="statut"
-          [(ngModel)]="auth.profil.statut"
-          required
-        >
-          <option value="" disabled selected="selected">Status</option>
-          <option>user</option>
-          <option>admin</option>
-        </select>
-      </div>
-      <button type="submit" class="btn btn-primary">Créer</button>
-      <button type="reset" class="btn btn-primary">Annuler</button>
+        <div class="field">
+          <label for="avatar">Photo</label>
+          <p-fileUpload
+            class="w-full"
+            mode="basic"
+            chooseLabel="avatar"
+            id="avatar"
+            name="avatar"            
+            [(ngModel)]="auth.profil.avatar"
+            url="https://www.primefaces.org/cdn/api/upload.php"
+            accept="image/*"
+            [maxFileSize]="1000000"
+            [auto]="true"
+            (onUpload)="users.loadImage($event)"
+            required
+          ></p-fileUpload>
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input
+            type="text"
+            pInputText
+            class="w-full"
+            id="email"
+            name="email"
+            [disabled]="auth.isloggedIn"
+            [(ngModel)]="auth.profil.email"
+            required
+          />
+        </div>
+        <div class="field" *ngIf="!auth.isloggedIn">
+          <label for="mdp">Mot de passe*</label>
+          <input
+            type="password"
+            class="w-full"
+            pInputText
+            id="mdp"
+            name="mdp"
+            placeholder="Saississez votre mot de passe"
+            [(ngModel)]="auth.profil.mdp"
+            required
+          />
+        </div>
+        <div class="field">
+          <p-treeSelect class="md:w-20rem w-full" 
+          containerStyleClass="w-full" 
+          [(ngModel)]="auth.profil.statut" 
+          [options]="nodes"                    
+          placeholder="Roles">
+         
+          </p-treeSelect>          
+        </div>
+        <ng-template pTemplate="footer">
+          <p-button
+            type="submit"
+            label="Créer"
+            [text]="true"
+            [raised]="true"
+            [rounded]="true"
+            icon="pi pi-check"
+          ></p-button>
+          <p-button
+            type="reset"
+            label="Annuler"
+            [text]="true"
+            [raised]="true"
+            [rounded]="true"
+            icon="pi pi-times"
+            styleClass="p-button-secondary"
+            [style]="{ 'margin-left': '.5em' }"
+          ></p-button>
+          <div class="mt-2">
+            Déjà membre? <a routerLink="/connexion">Login</a>
+          </div>
+        </ng-template>
+        <em>* obligatoire</em>
+      </p-card>
     </form>
-    <em>* obligatoire</em>
-  </fieldset>  
+  </p-fieldset>
 </section>

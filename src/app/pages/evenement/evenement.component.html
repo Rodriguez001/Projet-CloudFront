@@ -1,5 +1,6 @@
-<section>
-  <div class="container" *ngIf="evenement">
+
+  <section class="flex justify-content-center align-items-center h-full w-full">
+  <div class="card" *ngIf="evenement">
     <h2>{{ evenement.titre }}</h2>
     <p>Date: {{ evenement.date | date }}</p>
     <p>Places: {{ evenement.places }}</p>
@@ -13,21 +14,26 @@
         *ngIf="evenement.media"
       />
     </p>
+    <p><button (click)="this.fermer()">Participer</button>
   </div>
+
   <div class="container" *ngIf="selectedEvent">
-    <h2>{{ selectedEvent.titre }}</h2>
-    <p>Date: {{ selectedEvent.date | date }}</p>
-    <p>Places: {{ selectedEvent.places }}</p>
-    <p>
+    <h2 class="m-0">{{ selectedEvent.titre }}</h2>
+    <div class="field">Date: {{ selectedEvent.date | date }}</div>
+    <div class="field">Places: {{ selectedEvent.places }}</div>
+    <div class="field">
       Horaires: {{ selectedEvent.horaires.debut }} - {{ selectedEvent.horaires.fin }}
-    </p>
-    <p>
+    </div>
+    <div class="field">
       <img
         [src]="selectedEvent.media.src"
         [alt]="selectedEvent.media.alt"
         *ngIf="selectedEvent.media"
       />
-    </p>
-    <p><button (click)="this.fermer()">Fermer</button></p>
+    </div>
+    <div class="field"><button pButton pRipple label="Fermer" icon="pi pi-times" (click)="this.fermer()"></button></div>
+    <div class="field"><button pButton pRipple label="Participer" icon="pi pi-check" (click)="this.participer()"></button></div>
   </div>
 </section>
+
+

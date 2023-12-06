@@ -8,9 +8,21 @@ import {
   signInWithEmailAndPassword,
   signOut,
   User,
+  getAuth,
   createUserWithEmailAndPassword,
-  deleteUser
+  deleteUser,
 } from '@angular/fire/auth';
+import {
+  Firestore,
+  addDoc,
+  setDoc,
+  updateDoc,
+  deleteDoc,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+} from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -29,17 +41,52 @@ export class AuthService {
     mobile: '',
     dateCreation: 0,
     infos: '',
-    //avatar: 'null',
+    avatar: '',
     lastlogin: 0,
-    uid: ''
-   };
+    uid: '',
+  };
   isloggedIn: boolean = false;
+  isAdmin: boolean = false;
   user!: User;
+
+  items = [
+    { label: 'Accueil', icon: 'pi pi-home', routerLink: '/' },
+    { label: 'Evénements', icon: 'pi pi-info', routerLink: '/evenements' },
+    { label: 'Mon profil', icon: 'pi pi-info', routerLink: '/profil' },
+    { label: 'Utilisateurs', icon: 'pi pi-users', routerLink: '/utilisateurs' },
+    {
+      label: "S'inscrire",
+      icon: 'pi pi-info',
+      routerLink: '/inscription',
+      visible: true,
+    },
+    {
+      label: 'Se connecter',
+      icon: 'pi pi-sign-in',
+      routerLink: '/connexion',
+      command: () => {
+        console.log('visible : ' + this.isloggedIn);
+      },
+      visible: true,
+    },
+    {
+      label: 'Se deconnecter',
+      icon: 'pi pi-sign-out',
+      command: () => {
+        this.logout();
+      },
+      visible: false,
+    },
+  ];
 
   // Integration de l'authentification de firebase
   private fire = inject(Auth);
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private store: Firestore
+  ) {}
 
   authentification() {
     if (!this.profil.email || !this.profil.mdp) {
@@ -52,6 +99,11 @@ export class AuthService {
         console.log('Données téléchargées du JSON', p);
         this.profil = p;
         this.isloggedIn = true;
+        if (p.statut == 'admin') {
+          this.isAdmin = true;
+        } else {
+          this.isAdmin = false;
+        }
         this.router.navigateByUrl('/');
       },
       error: (er) => console.log(er),
@@ -62,45 +114,55 @@ export class AuthService {
   fireAuth() {
     signInWithEmailAndPassword(this.fire, this.profil.email, this.profil.mdp)
       .then((infos) => {
-        this.user = infos.user;
-        this.profil.tel = infos.user.phoneNumber!
-        this.profil.nom = infos.user.displayName!
-        //this.profil.mdp = infos.user.providerData.providerId!      
-        this.profil.dateCreation = parseInt(infos.user.metadata.creationTime!);
-        this.profil.lastlogin = parseInt(infos.user.metadata.lastSignInTime!);
-        this.profil.email = infos.user.email!;
-        this.profil.nom = infos.user.displayName!;
+        const monDoc = doc(this.store, 'users', infos.user.uid);
+        getDoc(monDoc)
+          .then((doc) => {
+            console.log('User connecté...', doc.data());
+            this.profil = doc.data() as UsersI;
+          })
+          .catch((err) => {});
+
         this.profil.uid = infos.user.uid!;
         //this.profil.token = infos.user;
         this.isloggedIn = true;
+        this.isAdmin = true;
+        this.toggleLink();
         this.router.navigateByUrl('/');
-
+        
         console.log(this.user);
       })
       .catch((er) => {
         console.log(er);
         this.isloggedIn = false;
+        this.isAdmin = false;
       });
   }
 
   register() {
-    createUserWithEmailAndPassword(this.fire, this.profil.email, this.profil.mdp)
+    createUserWithEmailAndPassword(
+      this.fire,
+      this.profil.email,
+      this.profil.mdp
+    )
       .then((result) => {
-        this.user = result.user
-        this.isloggedIn = true
+        this.user = result.user;
+        this.isloggedIn = true;
         //this.router.navigateByUrl('/connexion');
-        console.log('Registration successful:', result.user)
+        console.log('Registration successful:', result.user);
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.error('Registration failed:', errorMessage);
-        this.isloggedIn = false
+        this.isloggedIn = false;
       });
   }
 
   delete() {
-    deleteUser(this.user)
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    deleteUser(user!)
       .then((p) => console.log('deleting user successful:', p))
       .catch((error) => {
         const errorCode = error.code;
@@ -112,10 +174,34 @@ export class AuthService {
   logout() {
     signOut(this.fire)
       .then((result) => {
-        this.isloggedIn = false
+        this.isloggedIn = false;
+        this.profil = {
+          nom: '',
+          prenom: '',
+          email: '',
+          mdp: '',
+          statut: '',
+          emailverified: true,
+          token: '',
+          tel: '',
+          mobile: '',
+          dateCreation: 0,
+          infos: '',
+          avatar: '',
+          lastlogin: 0,
+          uid: '',
+        };
+        this.toggleLink();
         this.router.navigateByUrl('/connexion');
-        console.log('Logout successful')
+        console.log('Logout successful');
       })
       .catch((error) => console.error('Logout failed:', error));
+  }
+
+  toggleLink() {
+    // Inverse la visibilité du lien
+    this.items[4].visible = !this.items[4].visible;
+    this.items[5].visible = !this.items[5].visible;
+    this.items[6].visible = !this.items[6].visible;
   }
 }

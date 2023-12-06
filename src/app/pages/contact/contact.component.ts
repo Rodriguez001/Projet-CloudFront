@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { ContactI } from 'src/app/shared/models/users-i';
+import { MessageService } from 'primeng/api';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-contact',
@@ -16,9 +18,15 @@ export class ContactComponent {
     mobile: '4545454553',
     email: 'email@',
     infos: '',
+    message: ''
   };
 
+  constructor( private messageService: MessageService, private router: Router){
+
+  }
   coucouToi() {
     console.log(this.contact);
+    this.messageService.add({severity:'success', summary: 'Successful', detail: 'message envoyé', life: 3000});
+    //this.router.navigateByUrl('/');
   }
 }

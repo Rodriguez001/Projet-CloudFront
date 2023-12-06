@@ -13,7 +13,7 @@ export interface UsersI {
   mobile?: string;
   dateCreation: number;
   infos?: string;
-  avatar?: string;
+  avatar: string;
   lastlogin: Number;
   uid?: string;
 }
@@ -39,6 +39,7 @@ interface Metadata{
 
 
 export interface ContactI {
+message: any;
   nom: string;
   prenom: string;
   age: number;

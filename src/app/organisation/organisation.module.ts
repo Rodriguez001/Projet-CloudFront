@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MenuModule } from 'primeng/menu';
+import { BadgeModule } from 'primeng/badge';
+
 
 import { OrganisationRoutingModule } from './organisation-routing.module';
 import { AccueilComponent } from './pages/accueil/accueil.component';
@@ -10,6 +13,6 @@ import { OrganisationComponent } from './organisation/organisation.component';
 
 @NgModule({
   declarations: [AccueilComponent, OrgaMenuComponent, OrgaStocksComponent, OrgaEventsComponent, OrganisationComponent],
-  imports: [CommonModule, OrganisationRoutingModule],
+  imports: [CommonModule,  MenuModule, BadgeModule, OrganisationRoutingModule],
 })
 export class OrganisationModule {}

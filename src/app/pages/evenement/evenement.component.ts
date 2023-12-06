@@ -10,6 +10,9 @@ import { EvenementsService } from 'src/app/shared/services/evenements.service';
   styleUrls: ['./evenement.component.css'],
 })
 export class EvenementComponent {
+participer() {
+throw new Error('Method not implemented.');
+}
   eventId: any = '';
   evenement: EvenementI = {titre: '', date:0, infos:'', places:0, horaires:{debut:'', fin:''}, media: {alt:'', src:''}};
   @Input('selectedE') selectedEvent!: EvenementI;

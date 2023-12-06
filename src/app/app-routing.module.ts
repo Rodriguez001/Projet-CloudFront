@@ -11,7 +11,7 @@ import { ContactComponent } from './pages/contact/contact.component';
 import { ErreurComponent } from './pages/erreur/erreur.component';
 import { OrganisationModule } from './organisation/organisation.module';
 import { EvenementComponent } from './pages/evenement/evenement.component';
-import { authGuard } from './shared/securite/auth.guard';
+import { authAdmin, authGuard } from './shared/securite/auth.guard';
 
 const routes: Routes = [
   { path: '', component: AccueilComponent },
@@ -32,6 +32,14 @@ const routes: Routes = [
         (m) => m.OrganisationModule,             
       ),
       canActivate: [authGuard]
+  },
+  { 
+  path: 'admin',
+    loadChildren: () =>
+      import('./admin/admin.module').then(
+        (m) => m.AdminModule,             
+      ),
+      canActivate: [authAdmin]
   },
   { path: '**', component: ErreurComponent },
 ];

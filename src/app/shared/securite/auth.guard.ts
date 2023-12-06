@@ -8,3 +8,8 @@ export const authGuard: CanActivateFn = (route, state) => {
   const auth = inject(AuthService);
   return auth.isloggedIn;
 };
+
+export const authAdmin: CanActivateFn = (route, state) => {
+  const auth = inject(AuthService);
+  return auth.isAdmin;
+};

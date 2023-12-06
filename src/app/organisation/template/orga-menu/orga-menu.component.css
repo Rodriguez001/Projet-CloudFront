@@ -1,0 +1,12 @@
+
+:host ::ng-deep .p-menu .p-menuitem-link .p-menuitem-text { 
+    color: #000 !important; 
+} 
+
+.bottomnav {
+    position: absolute ;
+    margin: 0 0;  
+   
+   
+  }
+  

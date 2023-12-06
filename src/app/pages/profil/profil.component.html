@@ -1,21 +1,56 @@
-<section>
-  <div class="container" *ngIf="auth.profil">
-    <h2>Votre profil</h2>
-    <p>Nom: {{ auth.profil.nom }}</p>
-    <p>Prenom: {{ auth.profil.prenom }}</p>
-    <p>Email: {{ auth.profil.email }}</p>
-    <p>
-      Photo<img
+<section class="flex justify-content-center align-items-center h-full w-full">
+<p-splitter
+  [panelSizes]="[40, 60]"
+  [style]="{ height: '300px' }"
+  styleClass="mb-5"
+>
+  <ng-template pTemplate>
+    <div
+      class="col flex align-items-center justify-content-center"
+      *ngIf="auth.profil"
+    >
+      <img
         class="image-container"
         [src]="auth.profil.avatar"
         alt="image profil"
         *ngIf="auth.profil.avatar"
       />
-    </p>
-  </div>
-  <fieldset>
-    <form *ngIf="auth.isloggedIn" (submit)="users.supprimerProfil()">
-      <button type="submit" class="btn btn-primary">Fermer le compte</button>
-    </form>
-  </fieldset>
+    </div>
+  </ng-template>
+  <ng-template pTemplate>    
+    <p-splitter [style]="{ height: '300px' }" styleClass="mb-5" layout="vertical">
+      <ng-template pTemplate>
+          <div class="col flex align-items-center justify-content-center">
+            <div
+            class="col flex align-items-center justify-content-center"
+            *ngIf="auth.profil"
+          >
+            <p-fieldset legend="Vos informations personnelles">
+              <div class="field">Nom: {{ auth.profil.nom }}</div>
+              <div class="field">Prenom: {{ auth.profil.prenom }}</div>
+              <div class="field">Email: {{ auth.profil.email }}</div>
+            </p-fieldset>
+          </div>
+          </div>
+      </ng-template>
+      <ng-template pTemplate>
+          <div class="col flex align-items-center justify-content-center">            
+              <form *ngIf="auth.isloggedIn" (submit)="users.supprimerProfil()">
+                <p-button
+                  type="submit"
+                  [text]="true"
+                  label="Fermer le compte"
+                  [raised]="true"
+                  [rounded]="true"
+                  icon="pi pi-times"
+                  styleClass="p-button-primary"
+                  [style]="{ 'margin-left': '.5em' }"
+                >
+                </p-button>
+              </form>           
+          </div>
+      </ng-template>
+  </p-splitter>
+  </ng-template>
+</p-splitter>
 </section>

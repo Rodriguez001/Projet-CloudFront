@@ -1,5 +1,6 @@
 [
   {
+    "id": "1",
     "titre": "Démarrage du cours Angular",
     "date": 1699347579844,
     "places": 22,
@@ -13,6 +14,7 @@
     }
   },
   {
+    "id": "2",
     "titre": "Voir la partie dynamique des données dans Angular",
     "date": 1699347579850,
     "places": 12,
@@ -26,6 +28,7 @@
     }
   },
   {
+    "id": "3",
     "titre": "Modularisation des trucs",
     "date": 1699347579899,
     "places": 26,
@@ -33,9 +36,13 @@
       "debut": "Hier matin",
       "fin": "Hier soir"
     },
-    "image": "assets/images/event.png"
+    "media": {
+      "src": "assets/images/event.png",
+      "alt": "image inexistante"
+    }
   },
   {
+    "id": "4",
     "titre": "Sécurité dans le développement Front",
     "date": 1699347579950,
     "places": 21,
@@ -43,9 +50,13 @@
       "debut": "Ce matin",
       "fin": "Plus tard"
     },
-    "image": "assets/images/event.png"
+    "media": {
+      "src": "assets/images/event.png",
+      "alt": "image inexistante"
+    }
   },
   {
+    "id": "5",
     "titre": "XHR et asynchrone en dans les technologies Web",
     "date": 1699347589844,
     "places": 22,
@@ -53,9 +64,13 @@
       "debut": "Hier matin",
       "fin": "Hier soir"
     },
-    "image": "assets/images/event.png"
+    "media": {
+      "src": "assets/images/event.png",
+      "alt": "image inexistante"
+    }
   },
   {
+    "id": "6",
     "titre": "Qu'est qu'on pourrait bien faire ? On fait un évenement pour en parler ?",
     "date": 1699347599850,
     "places": 21,
@@ -63,9 +78,13 @@
       "debut": "Ce matin",
       "fin": "Plus tard"
     },
-    "image": "assets/images/event.png"
+    "media": {
+      "src": "assets/images/event.png",
+      "alt": "image inexistante"
+    }
   },
   {
+    "id": "7",
     "titre": "Bon, bin, voilà, on sait tout",
     "date": 1699347599944,
     "places": 5,
@@ -73,9 +92,13 @@
       "debut": "Hier matin",
       "fin": "Hier soir"
     },
-    "image": "assets/images/event.png"
+    "media": {
+      "src": "assets/images/event.png",
+      "alt": "image inexistante"
+    }
   },
   {
+    "id": "8",
     "titre": "L'an prochain on sera quand ??",
     "date": 1699357579850,
     "places": 21,
@@ -83,9 +106,13 @@
       "debut": "Ce matin",
       "fin": "Plus tard"
     },
-    "image": "assets/images/event.png"
+    "media": {
+      "src": "assets/images/event.png",
+      "alt": "image inexistante"
+    }
   },
   {
+    "id": "9",
     "titre": "365 + 365 = ... l'an prochain ?",
     "date": 1699367579844,
     "places": 42,
@@ -93,9 +120,13 @@
       "debut": "Hier matin",
       "fin": "Hier soir"
     },
-    "image": "assets/images/event.png"
+    "media": {
+      "src": "assets/images/event.png",
+      "alt": "image inexistante"
+    }
   },
   {
+    "id": "10",
     "titre": "Quelque chose s'est produit à pau !",
     "date": 1699377579850,
     "places": 21,
@@ -103,9 +134,13 @@
       "debut": "Ce matin",
       "fin": "Plus tard"
     },
-    "image": "assets/images/event.png"
+    "media": {
+      "src": "assets/images/event.png",
+      "alt": "image inexistante"
+    }
   },
   {
+    "id": "11",
     "titre": "Comment ? Il y a eu un événement ?",
     "date": 1699348579844,
     "places": 17,
@@ -113,9 +148,13 @@
       "debut": "Hier matin",
       "fin": "Hier soir"
     },
-    "image": "assets/images/event.png"
+    "media": {
+      "src": "assets/images/event.png",
+      "alt": "image inexistante"
+    }
   },
   {
+    "id": "12",
     "titre": "Oui !! à Pau !!!",
     "date": 1699397579850,
     "places": 14,
@@ -123,6 +162,9 @@
       "debut": "Ce matin",
       "fin": "Plus tard"
     },
-    "image": "assets/images/event.png"
+    "media": {
+      "src": "assets/images/event.png",
+      "alt": "image inexistante"
+    }
   }
 ]

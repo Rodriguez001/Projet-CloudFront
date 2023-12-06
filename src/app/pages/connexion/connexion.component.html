@@ -1,31 +1,56 @@
-<section class="form-container">
-  <h1>S'identifier</h1>
+<section class="flex justify-content-center align-items-center h-full w-full">
   <form (submit)="auth.fireAuth()">
-    <div class="form-group">
-      <label for="id">Login</label>
-      <input
-        type="text"
-        class="form-control"
-        id="id"
-        name="id"
-        placeholder="Saississez votre identifiant"
-        [(ngModel)]="auth.profil.email"
-        required
-      />
-    </div>
-    <div class="form-group">
-      <label for="mdp">Mot de passe</label>
-      <input
-        type="password"
-        class="form-control"
-        id="mdp"
-        name="mdp"
-        placeholder="Saississez votre mot de passe"
-        [(ngModel)]="auth.profil.mdp"
-        required
-      />
-    </div>
-    <button type="submit" class="btn btn-primary">Connexion</button>
-    <button type="reset" class="btn btn-primary">Annuler</button>
+    <p-card    
+      header="S'identifier"
+      subheader="Entrez vos identifiants"
+      [style]="{ width: '360px' }"
+    >
+      <div class="field">
+        <label for="id">Login</label>
+        <input
+          type="text"
+          class="w-full"
+          id="id"
+          name="id"
+          pInputText
+          placeholder="Entrez votre email"
+          [(ngModel)]="auth.profil.email"
+          required
+        />
+      </div>
+      <div class="field">
+        <label for="mdp">Mot de passe</label>
+        <input
+          type="password"
+          class="w-full"
+          id="mdp"
+          name="mdp"
+          pInputText
+          placeholder="Entrez votre mot de passe"
+          [(ngModel)]="auth.profil.mdp"
+          required
+        />
+      </div>
+      <ng-template pTemplate="footer">
+      <p-button
+        type="submit"
+        label="Connexion"
+        [text]="true" [raised]="true"        
+        [rounded]="true"
+        icon="pi pi-check"
+      ></p-button>
+      <p-button
+        type="reset"
+        label="Annuler"
+        [text]="true" [raised]="true"
+        [rounded]="true"
+        icon="pi pi-times" styleClass="p-button-secondary" [style]="{ 'margin-left': '.5em' }"
+      ></p-button>        
+    </ng-template>
+      <div class="mt-2">
+        Pas encore inscrit? <a routerLink="/inscription">S'inscrire</a>
+      </div>
+    </p-card>
   </form>
 </section>
+  

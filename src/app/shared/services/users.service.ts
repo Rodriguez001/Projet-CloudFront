@@ -20,18 +20,25 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from 'firebase/storage';
+import { Observable } from 'rxjs/internal/Observable';
+import { FileUploadEvent } from 'primeng/fileupload';
+import { MessageService } from 'primeng/api';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class UsersService {
-  private image: FileList | undefined;
+  private image: File | undefined;
   private autho = getAuth();
-  private user = this.autho.currentUser;
+  public user = this.autho.currentUser;
   private liste_users: Array<UsersI> = [];
+  selected: any;
+  public lienUrl: string | undefined;
   constructor(
     private store: Firestore,
     private auth: AuthService,
+    private messageService: MessageService,
     private route: Router
   ) {}
 
@@ -43,28 +50,41 @@ export class UsersService {
       })
       .catch((er) => console.log(er));
   }
-  /** Permet de creer un objet ou de le mettre à jour à partir de son identifiant */
-  gererDoc(profil: UsersI) {
-    if (this.auth.profil.avatar) {
-      this.saveImage();
-    }
-    console.log(
-      'profil infos: ',
-      profil,
-      'uid user : ',
-      this.auth.user.uid,
-      'photo : ',
-      this.auth.profil.avatar!
-    );
 
-    const monDoc = doc(this.store, 'users', this.auth.user.uid);
-    setDoc(monDoc, profil, { merge: true })
+  /** Permet de creer un objet ou de le mettre à jour à partir de son identifiant */
+  gererDoc() {
+    console.log('avatar file : ' + this.image?.name);
+    if (this.image) {
+      this.saveImage();
+      this.auth.profil.uid = this.auth.user!.uid;
+      console.log(
+        'photo : ',
+        this.auth.profil.avatar,
+        'profil infos: ',
+        this.auth.profil,
+        'uid user : ',
+        this.auth.user.uid
+      );
+    }
+
+    const monDoc = doc(this.store, 'users', this.auth.user!.uid);
+    setDoc(monDoc, this.auth.profil, { merge: true })
       .then((p) => {
         if (!this.auth.isloggedIn) {
           this.auth.isloggedIn = false;
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Connexion reussie',
+          });
           this.route.navigateByUrl('/connexion');
         } else {
           this.auth.isloggedIn = true;
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Identifiants incorrects',
+          });
           this.route.navigateByUrl('/');
         }
 
@@ -76,7 +96,8 @@ export class UsersService {
   }
 
   supprimerProfil() {
-    const monDoc = doc(this.store, 'users', this.auth.user.uid);
+    console.log("uid  to delete : " + this.auth.profil.uid!);    
+    const monDoc = doc(this.store, 'users', this.auth.profil.uid!);
     deleteDoc(monDoc)
       .then((p) => console.log(p))
       .catch((er) => console.log(er));
@@ -105,14 +126,16 @@ export class UsersService {
     return this.liste_users;
   }
 
-  loadImage(event: any) {
-    this.image = event.target.files as FileList;
-    console.log('Load Image : ', this.image!.item(0));
+  loadImage(event: FileUploadEvent) {
+    console.log('Loading event selection...:', event);
+    this.image = event.files[0] as File;
+
+    console.log('Load Image : ', this.image!);
     //this.imageUpload(this.image!.item(0) as File)
   }
 
   saveImage() {
-    const img = this.image!.item(0) as File;
+    const img = this.image! as File;
     this.imageUpload(img!);
   }
 
@@ -122,7 +145,7 @@ export class UsersService {
     // Create the file metadata
     /** @type {any} */
     const metadata = {
-      contentType: 'image/jpeg',
+      contentType: 'image/*',
     };
 
     // Upload file and metadata to the object 'images/mountains.jpg'
@@ -167,8 +190,9 @@ export class UsersService {
       () => {
         // Upload completed successfully, now we can get the download URL
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          console.log('File available at', downloadURL);
           this.auth.profil.avatar = downloadURL;
+          this.lienUrl = downloadURL as string;
+          console.log('File available at', this.auth.profil.avatar);
         });
       }
     );
