@@ -6,22 +6,24 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-## Code scaffolding
+## Disponible egalement sur firebase server 
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+https://angular-app-81946.web.app
 
-## Build
+## parametres utiles de connection
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Nous avons 2 roles: admin et user
+admin:
+    - login: marc@gmail.com
+    - password: marc23
 
-## Running unit tests
+user: 
+    - login: tamo@gmail.com
+    - password: tamo23
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+(note: Un souci lors de l'inscription des utilisateur avec l'upload de lors photo. Il faut le faire une deuxieme fois pour que ce 
+soit pris en compte au niveau du server). 
 
-## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
